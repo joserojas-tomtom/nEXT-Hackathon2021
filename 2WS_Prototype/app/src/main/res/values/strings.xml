@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Go Navigation Example</string>
+    <!-- Preference Titles -->
+    <string name="settings_header">SETTINGS</string>
+    <string name="general_header">GENERAL</string>
+    <string name="simulate_driving_title">Simulate drive</string>
+
+</resources>

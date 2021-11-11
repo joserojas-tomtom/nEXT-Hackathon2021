@@ -1,0 +1,59 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext.kotlin_version = "1.5.31"
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://plugins.gradle.org/m2/") }
+        maven { url = uri("https://jitpack.io") }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.3"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+plugins {
+    id("io.wusa.semver-git-plugin").version("2.3.7")
+}
+
+semver {
+    branches {
+        // do not include snapshot suffix for sake of generating tag for next release
+        snapshotSuffix = ""
+        branch {
+            regex = ".*"
+            incrementer = "PATCH_INCREMENTER"
+            formatter = {
+                "${info.version.major}.${info.version.minor}.${info.version.patch}"
+            }
+        }
+    }
+}
+
+task pushReleaseTag(type: Exec) {
+    commandLine("$rootDir/scripts/push_tag.sh", semver.info.toString())
+}
+
+allprojects {
+    version = semver.info.toString()
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+        maven {
+            credentials {
+                username = "tt-hackathon"
+                password = "n.EXThackathon2021"
+            }
+            url = uri("https://dl.tomtom.com:8443/nexus/content/groups/go-sdk-android/")
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

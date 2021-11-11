@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Paddings for map in navigation -->
+    <dimen name="navigation_map_padding_left">60dp</dimen>
+    <dimen name="navigation_map_padding_top">0dp</dimen>
+    <dimen name="navigation_map_padding_right">300dp</dimen>
+    <dimen name="navigation_map_padding_bottom">32dp</dimen>
+
+    <!-- Paddings for map in free driving -->
+    <dimen name="free_driving_map_padding_left">0dp</dimen>
+    <dimen name="free_driving_map_padding_top">0dp</dimen>
+    <dimen name="free_driving_map_padding_right">0dp</dimen>
+    <dimen name="free_driving_map_padding_bottom">32dp</dimen>
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Paddings for map in navigation -->
+    <dimen name="navigation_map_padding_left">0dp</dimen>
+    <dimen name="navigation_map_padding_top">0dp</dimen>
+    <dimen name="navigation_map_padding_right">0dp</dimen>
+    <dimen name="navigation_map_padding_bottom">262dp</dimen>
+
+    <!-- Paddings for map in free driving -->
+    <dimen name="free_driving_map_padding_left">0dp</dimen>
+    <dimen name="free_driving_map_padding_top">0dp</dimen>
+    <dimen name="free_driving_map_padding_right">0dp</dimen>
+    <dimen name="free_driving_map_padding_bottom">262dp</dimen>
+
+    <!-- Preferences Settings button -->
+    <dimen name="settings_button_margin_bottom">40dip</dimen>
+    <dimen name="settings_button_size">64dip</dimen>
+
+    <!-- Preferences Settings title -->
+    <dimen name="settings_title_margin_top">20dip</dimen>
+    <dimen name="settings_title_margin_start">10dip</dimen>
+    <dimen name="settings_title_text_size">30sp</dimen>
+
+    <!-- Preferences Settings category -->
+    <dimen name="settings_category_title_margin_top">20dip</dimen>
+    <dimen name="settings_category_title_margin_start">10dip</dimen>
+    <dimen name="settings_category_title_text_size">24sp</dimen>
+
+    <!-- Preferences Settings entry -->
+    <dimen name="settings_entry_margin_top">6dip</dimen>
+    <dimen name="settings_entry_margin_start">15dip</dimen>
+    <dimen name="settings_entry_margin_bottom">6dip</dimen>
+    <dimen name="settings_entry_margin_end">6dip</dimen>
+    <dimen name="settings_entry_title_text_size">16sp</dimen>
+    <dimen name="settings_entry_title_margin_start">20dip</dimen>
+    <dimen name="settings_entry_summary_text_size">20sp</dimen>
+</resources>

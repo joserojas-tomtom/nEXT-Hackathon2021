@@ -1,0 +1,78 @@
+# Android
+# Build your Android project with Gradle.
+# Add steps that test, sign, and distribute the APK, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/android
+
+pr:
+  - main
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: Android_vars
+  - name: isMain
+    value: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+
+jobs:
+  - job: Build
+    pool:
+      vmImage: 'macOS-latest'
+    steps:
+      - checkout: self
+        persistCredentials: true
+        clean: true
+      - task: JavaToolInstaller@0
+        inputs:
+          versionSpec: '11'
+          jdkArchitectureOption: 'x64'
+          jdkSourceOption: 'PreInstalled'
+      - task: DownloadSecureFile@1
+        displayName: 'Download gradle.properties'
+        name: 'gradleProperties'
+        inputs:
+          secureFile: 'gradle.properties'
+      - task: Bash@3
+        displayName: 'Copy gradle.properties'
+        inputs:
+          targetType: 'inline'
+          script: 'mv $(gradleProperties.secureFilePath) ~/.gradle/gradle.properties'
+      - task: DownloadSecureFile@1
+        displayName: 'Download keystore file'
+        name: 'keystoreFile'
+        inputs:
+          secureFile: 'release-key.keystore'
+      - task: Bash@3
+        displayName: 'Copy keystore file'
+        inputs:
+          targetType: 'inline'
+          script: 'mkdir signing; mv $(keystoreFile.secureFilePath) ./signing/release-key.keystore'
+      - task: Gradle@2
+        displayName: 'Build project'
+        inputs:
+          tasks: 'build'
+      - task: Gradle@2
+        displayName: 'Show version'
+        inputs:
+          tasks: "showVersion"
+      - task: Gradle@2
+        displayName: 'Push release tag'
+        inputs:
+          tasks: 'pushReleaseTag'
+        condition: and(succeeded(), eq(variables.isMain, 'true'))
+      - task: AppCenterDistribute@3
+        displayName: 'Publish GO SDK Sample App to App Center'
+        condition: and(succeeded(), eq(variables.isMain, 'true'))
+        inputs:
+          serverEndpoint: 'GO SDK Sample App AppCenter'
+          appSlug: 'michal.wlodarczyk2-tomtom.com/GO-SDK-Sample-App'
+          appFile: 'app/build/outputs/apk/release/app-release.apk'
+          releaseNotesOption: 'input'
+          releaseNotesInput: 'Latest GO SDK Sample App generated from CI'
+          destinationType: 'groups'
